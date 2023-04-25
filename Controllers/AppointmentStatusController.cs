@@ -26,10 +26,6 @@ namespace P620231_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppointmentStatus>>> GetAppointmentStatuses()
         {
-          if (_context.AppointmentStatuses == null)
-          {
-              return NotFound();
-          }
             return await _context.AppointmentStatuses.ToListAsync();
         }
 
@@ -37,10 +33,6 @@ namespace P620231_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AppointmentStatus>> GetAppointmentStatus(int id)
         {
-          if (_context.AppointmentStatuses == null)
-          {
-              return NotFound();
-          }
             var appointmentStatus = await _context.AppointmentStatuses.FindAsync(id);
 
             if (appointmentStatus == null)
@@ -87,10 +79,6 @@ namespace P620231_API.Controllers
         [HttpPost]
         public async Task<ActionResult<AppointmentStatus>> PostAppointmentStatus(AppointmentStatus appointmentStatus)
         {
-          if (_context.AppointmentStatuses == null)
-          {
-              return Problem("Entity set 'P620231_AutoAppoContext.AppointmentStatuses'  is null.");
-          }
             _context.AppointmentStatuses.Add(appointmentStatus);
             await _context.SaveChangesAsync();
 
@@ -101,10 +89,6 @@ namespace P620231_API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointmentStatus(int id)
         {
-            if (_context.AppointmentStatuses == null)
-            {
-                return NotFound();
-            }
             var appointmentStatus = await _context.AppointmentStatuses.FindAsync(id);
             if (appointmentStatus == null)
             {
@@ -119,7 +103,7 @@ namespace P620231_API.Controllers
 
         private bool AppointmentStatusExists(int id)
         {
-            return (_context.AppointmentStatuses?.Any(e => e.AppoStatusId == id)).GetValueOrDefault();
+            return _context.AppointmentStatuses.Any(e => e.AppoStatusId == id);
         }
     }
 }
